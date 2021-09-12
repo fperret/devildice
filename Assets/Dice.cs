@@ -39,18 +39,14 @@ public class Dice : MonoBehaviour
         {
             m_rotating = true;
 
-            // remove colliders
-            setPrisonBoxCollidersState(false);
-
             for (int rotateLoopIndex = 0; rotateLoopIndex < 90; ++rotateLoopIndex) {
+                m_box.transform.Rotate(0, 0, -1);
                 transform.RotateAround(rotationPoint.Value, Vector3.forward, 1);
-                yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSeconds(0.005f);
             }
-            m_rotating = false;
 
-            // Replace colliders on top and re-activate them
-            m_box.transform.Rotate(0, 0, -90);
-            setPrisonBoxCollidersState(true);
+            yield return new WaitForSeconds(0.1f);
+            m_rotating = false;
             
         }
         yield break;
@@ -64,17 +60,14 @@ public class Dice : MonoBehaviour
         {
             m_rotating = true;
 
-            setPrisonBoxCollidersState(false);
-
             for (int rotateLoopIndex = 0; rotateLoopIndex < 90; ++rotateLoopIndex) {
+                m_box.transform.Rotate(0, 0, 1);
                 transform.RotateAround(rotationPoint.Value, Vector3.back, 1);
-                yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSeconds(0.005f);
             }
+            
+            yield return new WaitForSeconds(0.1f);
             m_rotating = false;
-
-            // Replace colliders on top and re-activate them
-            m_box.transform.Rotate(0, 0, 90);
-            setPrisonBoxCollidersState(true);
         }
         yield break;
     }
@@ -87,17 +80,14 @@ public class Dice : MonoBehaviour
         {
             m_rotating = true;
 
-            setPrisonBoxCollidersState(false);
-
             for (int rotateLoopIndex = 0; rotateLoopIndex < 90; ++rotateLoopIndex) {
+                m_box.transform.Rotate(-1, 0, 0);
                 transform.RotateAround(rotationPoint.Value, Vector3.right, 1);
-                yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSeconds(0.005f);
             }
+        
+            yield return new WaitForSeconds(0.1f);
             m_rotating = false;
-
-            // Replace colliders on top and re-activate them
-            m_box.transform.Rotate(0, 0, -90);
-            setPrisonBoxCollidersState(true);
         }
         yield break;
     }
@@ -110,18 +100,14 @@ public class Dice : MonoBehaviour
         {
             m_rotating = true;
 
-            setPrisonBoxCollidersState(false);
-
-
             for (int rotateLoopIndex = 0; rotateLoopIndex < 90; ++rotateLoopIndex) {
+                m_box.transform.Rotate(1, 0, 0);
                 transform.RotateAround(rotationPoint.Value, Vector3.left, 1);
-                yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSeconds(0.005f);
             }
+            
+            yield return new WaitForSeconds(0.1f);
             m_rotating = false;
-
-            // Replace colliders on top and re-activate them
-            m_box.transform.Rotate(0, 0, 90);
-            setPrisonBoxCollidersState(true);
         }
         yield break;
     }
@@ -197,25 +183,6 @@ public class Dice : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!m_rotating)
-        {
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                StartCoroutine("rotateLeft");
-            }
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                StartCoroutine("rotateRight");
-            }
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                StartCoroutine("rotateForward");
-            }
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                StartCoroutine("rotateBackward");
-            }
-        }
     }
 
     private void OnDrawGizmos()

@@ -22,24 +22,51 @@ public class Player : MonoBehaviour
     {
         float x_movement = Input.GetAxis("Horizontal");
         float z_movement = Input.GetAxis("Vertical");
-        Vector3 nextPosition = transform.position + new Vector3(x_movement, 0, z_movement) * Time.deltaTime;
+        Vector3 movement = new Vector3(x_movement, 0, z_movement);
+        if (movement.sqrMagnitude <= 0)
+            return ;
+
+        Vector3 nextPosition = transform.position + movement * Time.deltaTime;
         if (attachedDice != null) {
+            // Verifier / Ajuster le comportement quand on va vers un coin
             float x_diff = nextPosition.x - attachedDice.transform.position.x;
             float z_diff = nextPosition.z - attachedDice.transform.position.z;
-            if ((Mathf.Abs(x_diff) > DICE_EDGE_LIMIT) || (Mathf.Abs(z_diff) > DICE_EDGE_LIMIT))
+            // Going left on left border
+            if (movement.x < 0 && x_diff < 0 && (Mathf.Abs(x_diff) > DICE_EDGE_LIMIT))
             {
-                Debug.Log("Going too far");
-                //attachedDice.transform.position = nextPosition;
-                //m_rigidBody.isKinematic = true;
                 if (attachedDice.GetComponent<Dice>().m_rotating == false) {
                     attachedDice.GetComponent<Dice>().StartCoroutine("rotateLeft");
                 }
                 return ;
-                // rotate + move cube
+            }
+            // Going right on right border
+            else if (movement.x > 0 && x_diff > 0 && (Mathf.Abs(x_diff) > DICE_EDGE_LIMIT))
+            {
+                if (attachedDice.GetComponent<Dice>().m_rotating == false) {
+                    attachedDice.GetComponent<Dice>().StartCoroutine("rotateRight");
+                }
+                return ;
+            }
+            // Going back on back border
+            else if (movement.z < 0 && z_diff < 0 && (Mathf.Abs(z_diff) > DICE_EDGE_LIMIT))
+            {
+                if (attachedDice.GetComponent<Dice>().m_rotating == false) {
+                    attachedDice.GetComponent<Dice>().StartCoroutine("rotateBackward");
+                }
+                return ;
+            }
+            // Going front on front border
+            else if (movement.z > 0 && z_diff > 0 && (Mathf.Abs(z_diff) > DICE_EDGE_LIMIT))
+            {
+                if (attachedDice.GetComponent<Dice>().m_rotating == false) {
+                    attachedDice.GetComponent<Dice>().StartCoroutine("rotateForward");
+                }
+                return ;
             }
         }
         transform.position = nextPosition;
     }
+
 
     private void OnCollisionEnter(Collision other) {
         if (other.gameObject.tag == "Dice") {
