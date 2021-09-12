@@ -11,7 +11,7 @@ public class Dice : MonoBehaviour
     public BoxCollider m_rightCollider;
     public BoxCollider m_backCollider;
     public GameObject m_box;
-
+    public bool m_diceInteractable = true;
     public bool m_rotating = false;
 
     void Start()
@@ -183,6 +183,17 @@ public class Dice : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // For testing
+        if (Input.GetKey(KeyCode.Space))
+        {
+            transform.Translate(Vector3.down * Time.deltaTime * 0.3f);
+        }
+
+        if (transform.position.y < 0.25f)
+        {
+            setPrisonBoxCollidersState(false);
+            m_diceInteractable = false;
+        }
     }
 
     private void OnDrawGizmos()

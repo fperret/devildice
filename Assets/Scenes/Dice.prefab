@@ -42,7 +42,7 @@ BoxCollider:
   m_GameObject: {fileID: 299259196}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.1, y: 2, z: 0.9}
   m_Center: {x: -0.5, y: 1.2, z: 0}
@@ -170,7 +170,7 @@ BoxCollider:
   m_GameObject: {fileID: 977097797}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.9, y: 2, z: 0.1}
   m_Center: {x: 0, y: 1.2, z: 0.5}
@@ -214,10 +214,40 @@ BoxCollider:
   m_GameObject: {fileID: 1176895299}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.1, y: 2, z: 0.9}
   m_Center: {x: 0.5, y: 1.2, z: 0}
+--- !u!1 &1323173657
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1323173658}
+  m_Layer: 0
+  m_Name: Top
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1323173658
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1323173657}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 9056575191724604437}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1487007150
 GameObject:
   m_ObjectHideFlags: 0
@@ -5064,7 +5094,7 @@ BoxCollider:
   m_GameObject: {fileID: 1704866857}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.9, y: 2, z: 0.1}
   m_Center: {x: 0, y: 1.2, z: -0.5}
@@ -5103,6 +5133,7 @@ Transform:
   - {fileID: 5411245700131277489}
   - {fileID: 1487007151}
   - {fileID: 346133968}
+  - {fileID: 1323173658}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5215,6 +5246,7 @@ MonoBehaviour:
   m_rightCollider: {fileID: 977097799}
   m_backCollider: {fileID: 1704866859}
   m_box: {fileID: 346133967}
+  m_diceInteractable: 1
   m_rotating: 0
 --- !u!1 &1098279911963376856
 GameObject:
