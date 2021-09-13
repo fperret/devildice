@@ -12,13 +12,14 @@ public class Dice : MonoBehaviour
     public BoxCollider m_backCollider;
     public GameObject m_box;
     public bool m_diceInteractable = true;
+    public bool m_isClimbable = false;
     public bool m_rotating = false;
 
     void Start()
     {
     }
 
-    private void setPrisonBoxCollidersState(bool enabled)
+    public void setPrisonBoxCollidersState(bool enabled)
     {
         m_leftCollider.enabled = enabled;
         m_frontCollider.enabled = enabled;
@@ -193,6 +194,7 @@ public class Dice : MonoBehaviour
         {
             setPrisonBoxCollidersState(false);
             m_diceInteractable = false;
+            m_isClimbable = true;
         }
     }
 

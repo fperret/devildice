@@ -499,6 +499,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1848443309, guid: 34115fd4eff069845a47d22ce756724e, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8654250720420943610, guid: 34115fd4eff069845a47d22ce756724e, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -556,9 +560,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 299259198, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 977097799, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176895301, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1451778015, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
       propertyPath: m_diceInteractable
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1451778017, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1451778017, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1704866859, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1018343453066012882, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
       propertyPath: m_Name
