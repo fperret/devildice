@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System;
 
 public class Dice : MonoBehaviour
 {
     // Start is called before the first frame update
     public Transform[] m_rotationPoints = new Transform[12];
+    public Transform[] m_orientationPoints = new Transform[4];
+    public GameObject m_orientationPointsParent;
     public BoxCollider m_leftCollider;
     public BoxCollider m_frontCollider;
     public BoxCollider m_rightCollider;
@@ -17,6 +21,16 @@ public class Dice : MonoBehaviour
 
     void Start()
     {
+    }
+
+    public int getClosestFace(Vector3 referencePosition)
+    {
+        float distBack = (referencePosition - m_orientationPoints[0].position).sqrMagnitude;
+        float distLeft = (referencePosition - m_orientationPoints[1].position).sqrMagnitude;
+        float distRight = (referencePosition - m_orientationPoints[2].position).sqrMagnitude;
+        float distFront = (referencePosition - m_orientationPoints[3].position).sqrMagnitude;
+        float[] allDists = { distBack, distLeft, distRight, distFront };
+        return Array.IndexOf(allDists, allDists.Min());
     }
 
     public void setPrisonBoxCollidersState(bool enabled)
@@ -42,6 +56,8 @@ public class Dice : MonoBehaviour
 
             for (int rotateLoopIndex = 0; rotateLoopIndex < 90; ++rotateLoopIndex) {
                 m_box.transform.Rotate(0, 0, -1);
+                m_orientationPointsParent.transform.Rotate(0, 0, -1);
+                
                 transform.RotateAround(rotationPoint.Value, Vector3.forward, 1);
                 yield return new WaitForSeconds(0.005f);
             }
@@ -63,6 +79,7 @@ public class Dice : MonoBehaviour
 
             for (int rotateLoopIndex = 0; rotateLoopIndex < 90; ++rotateLoopIndex) {
                 m_box.transform.Rotate(0, 0, 1);
+                m_orientationPointsParent.transform.Rotate(0, 0, 1);
                 transform.RotateAround(rotationPoint.Value, Vector3.back, 1);
                 yield return new WaitForSeconds(0.005f);
             }
@@ -83,6 +100,7 @@ public class Dice : MonoBehaviour
 
             for (int rotateLoopIndex = 0; rotateLoopIndex < 90; ++rotateLoopIndex) {
                 m_box.transform.Rotate(-1, 0, 0);
+                m_orientationPointsParent.transform.Rotate(-1, 0, 0);
                 transform.RotateAround(rotationPoint.Value, Vector3.right, 1);
                 yield return new WaitForSeconds(0.005f);
             }
@@ -103,6 +121,7 @@ public class Dice : MonoBehaviour
 
             for (int rotateLoopIndex = 0; rotateLoopIndex < 90; ++rotateLoopIndex) {
                 m_box.transform.Rotate(1, 0, 0);
+                m_orientationPointsParent.transform.Rotate(1, 0, 0);
                 transform.RotateAround(rotationPoint.Value, Vector3.left, 1);
                 yield return new WaitForSeconds(0.005f);
             }
@@ -204,6 +223,10 @@ public class Dice : MonoBehaviour
         for (int i = 0; i < 12; ++i)
         {
             Gizmos.DrawSphere(m_rotationPoints[i].position, 0.1f);
+        }
+        for (int i = 0; i < 4; ++i)
+        {
+            Gizmos.DrawSphere(m_orientationPoints[i].position, 0.1f);
         }
     }
 }

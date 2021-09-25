@@ -330,50 +330,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!1 &897309038
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 897309039}
-  - component: {fileID: 897309040}
-  m_Layer: 0
-  m_Name: DiceTrigger
-  m_TagString: Dice
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &897309039
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897309038}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1868364119}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &897309040
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897309038}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2.9885912, z: 1}
-  m_Center: {x: 0, y: 0.9942956, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,11 +443,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1868364119 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9056575191724604437, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
-  m_PrefabInstance: {fileID: 8109100099016202416}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1967902721
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -499,6 +450,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1362821092, guid: 34115fd4eff069845a47d22ce756724e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1848443309, guid: 34115fd4eff069845a47d22ce756724e, type: 3}
       propertyPath: m_CollisionDetection
       value: 2
@@ -551,7 +506,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: MaleDummy
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1362821090, guid: 34115fd4eff069845a47d22ce756724e, type: 3}
+    - {fileID: 1362821091, guid: 34115fd4eff069845a47d22ce756724e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 34115fd4eff069845a47d22ce756724e, type: 3}
 --- !u!1001 &8109100099016202416
 PrefabInstance:
@@ -560,34 +517,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 299259198, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 977097799, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1176895301, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1451778015, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
-      propertyPath: m_diceInteractable
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1451778017, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1451778017, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
-      propertyPath: m_CollisionDetection
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1704866859, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1018343453066012882, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
       propertyPath: m_Name
       value: Dice

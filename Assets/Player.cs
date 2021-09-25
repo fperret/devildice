@@ -13,15 +13,19 @@ public class Player : MonoBehaviour
         FRONT
     };
     public const float DICE_EDGE_LIMIT = 0.3f;
+    public const float CEILING_PRESS_PUSH = 0.1f;
 
     private Rigidbody m_rigidBody;
     private CharacterController m_controller;
 
     public GameObject attachedDice = null;
+    public GameObject m_pushingDice = null;
     public bool m_needToClimb = false;
     public bool m_isPushing = false;
     // Start is called before the first frame update
     public Vector3 m_movement;
+
+    private float m_pressPushTime = 0;
     void Start()
     {
         m_controller = GetComponent<CharacterController>();
@@ -100,9 +104,48 @@ public class Player : MonoBehaviour
         return true;
     }
 
+    IEnumerator pushDice(Vector3 direction)
+    {
+        m_isPushing = true;
+        // Use enum ?
+        int closestFace = m_pushingDice.GetComponent<Dice>().getClosestFace(transform.position);
+        switch (closestFace)
+        {
+            case 0:
+                direction = Vector3.forward;
+                break;
+            case 1:
+                direction = Vector3.right;
+                break;
+            case 2:
+                direction = Vector3.left;
+                break;
+            case 3:
+                direction = Vector3.back;
+                break;
+            default:
+                Debug.Log("Unsupported closest face value");
+                break;
+        }
+        for (uint i = 0; i < 100; ++i)
+        {
+            // parfois c'est null
+            m_pushingDice.transform.Translate(direction * Time.deltaTime);
+            transform.Translate(direction * Time.deltaTime);
+            yield return new WaitForSeconds(0.01f);
+        }
+        m_isPushing = false;
+        //m_pushingDice = null;
+        yield break;
+    }
+
+
     // Update is called once per frame
     void Update()
     {
+        if (m_isPushing)
+            return ;
+
         float x_movement = Input.GetAxis("Horizontal");
         float z_movement = Input.GetAxis("Vertical");
         m_movement = new Vector3(x_movement, 0, z_movement);
@@ -112,6 +155,39 @@ public class Player : MonoBehaviour
         }
 
         // Voir comment les deplacements se passent quand on veut passer d'un cube en train d'apparaitre / disparaitre a un qui est full
+        if (m_pushingDice != null && !m_isPushing) {
+            int pushingFace = m_pushingDice.GetComponent<Dice>().getClosestFace(transform.position);
+            Vector3 pushingDirection = Vector3.zero;
+            switch (pushingFace)
+            {
+                case 0:
+                    if (z_movement > 0)
+                        pushingDirection = Vector3.forward;
+                    break;
+                case 1:
+                    if (x_movement > 0)
+                    pushingDirection = Vector3.right;
+                    break;
+                case 2:
+                    if (x_movement < 0)
+                    pushingDirection = Vector3.left;
+                    break;
+                case 3:
+                    if (z_movement < 0)
+                        pushingDirection = Vector3.back;
+                    break;
+                default:
+                    Debug.Log("Unsupported closest face value");
+                    break;
+            }
+            if (pushingDirection != Vector3.zero) {
+                m_pressPushTime += Time.deltaTime;
+            }
+            if (m_pressPushTime > CEILING_PRESS_PUSH) {
+                StartCoroutine("pushDice", pushingDirection);
+                m_pressPushTime = 0;
+            }
+        }
 
         Vector3 nextPosition = transform.position + m_movement * Time.deltaTime;
         if (attachedDice != null) {
@@ -164,10 +240,7 @@ public class Player : MonoBehaviour
                 attachedDice = other.gameObject;
             } else {
                 // Push dice
-                // Get direction of impact
-                m_isPushing = true;
-
-
+                m_pushingDice = other.gameObject;
             }
         }
     }
@@ -177,7 +250,9 @@ public class Player : MonoBehaviour
             if (other.gameObject.GetComponent<Dice>().m_isClimbable) {
                 m_needToClimb = false;
             } else {
-                m_isPushing = false;
+                if (m_isPushing == false) {
+                    m_pushingDice = null;
+                }
             }
         }
     }
