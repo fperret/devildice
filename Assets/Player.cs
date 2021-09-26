@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
         BACK,
         FRONT
     };
-    public const float DICE_EDGE_LIMIT = 0.3f;
+    public const float DICE_EDGE_LIMIT = 0.25f;
     public const float CEILING_PRESS_PUSH = 0.1f;
 
     private Rigidbody m_rigidBody;
@@ -104,29 +104,36 @@ public class Player : MonoBehaviour
         return true;
     }
 
-    IEnumerator pushDice(Vector3 direction)
+    IEnumerator pushDice(Vector3 movement)
     {
         m_isPushing = true;
-        // Use enum ?
-        int closestFace = m_pushingDice.GetComponent<Dice>().getClosestFace(transform.position);
-        switch (closestFace)
+        Dice.FacePosition pushingFace = m_pushingDice.GetComponent<Dice>().getClosestFace(transform.position);
+        Vector3 direction = Vector3.zero;
+        switch (pushingFace)
         {
-            case 0:
+            case Dice.FacePosition.BACK:
                 direction = Vector3.forward;
                 break;
-            case 1:
+            case Dice.FacePosition.LEFT:
                 direction = Vector3.right;
                 break;
-            case 2:
+            case Dice.FacePosition.RIGHT:
                 direction = Vector3.left;
                 break;
-            case 3:
+            case Dice.FacePosition.FRONT:
                 direction = Vector3.back;
                 break;
             default:
                 Debug.Log("Unsupported closest face value");
-                break;
+                yield break;
         }
+
+        // This coroutine can be called if we are close to the dice and moving in parallel
+        // We only push if we are moving in the direction of the dice
+        if (Vector3.Dot(movement, direction) != 1) {
+            yield break;
+        }
+
         for (uint i = 0; i < 100; ++i)
         {
             // parfois c'est null
@@ -156,35 +163,9 @@ public class Player : MonoBehaviour
 
         // Voir comment les deplacements se passent quand on veut passer d'un cube en train d'apparaitre / disparaitre a un qui est full
         if (m_pushingDice != null && !m_isPushing) {
-            int pushingFace = m_pushingDice.GetComponent<Dice>().getClosestFace(transform.position);
-            Vector3 pushingDirection = Vector3.zero;
-            switch (pushingFace)
-            {
-                case 0:
-                    if (z_movement > 0)
-                        pushingDirection = Vector3.forward;
-                    break;
-                case 1:
-                    if (x_movement > 0)
-                    pushingDirection = Vector3.right;
-                    break;
-                case 2:
-                    if (x_movement < 0)
-                    pushingDirection = Vector3.left;
-                    break;
-                case 3:
-                    if (z_movement < 0)
-                        pushingDirection = Vector3.back;
-                    break;
-                default:
-                    Debug.Log("Unsupported closest face value");
-                    break;
-            }
-            if (pushingDirection != Vector3.zero) {
-                m_pressPushTime += Time.deltaTime;
-            }
+            m_pressPushTime += Time.deltaTime;
             if (m_pressPushTime > CEILING_PRESS_PUSH) {
-                StartCoroutine("pushDice", pushingDirection);
+                StartCoroutine("pushDice", m_movement);
                 m_pressPushTime = 0;
             }
         }

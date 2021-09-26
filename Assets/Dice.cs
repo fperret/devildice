@@ -6,6 +6,25 @@ using System;
 
 public class Dice : MonoBehaviour
 {
+    public enum Face {
+        ONE = 1,
+        TWO = 2,
+        THREE,
+        FOUR,
+        FIVE,
+        SIX,
+        UNKNOWN
+    };
+
+    // We do not define UP and DOWN as we do not need them for now
+    public enum FacePosition {
+        BACK,
+        LEFT,
+        RIGHT,
+        FRONT,
+        UNKNOWN
+    }
+
     // Start is called before the first frame update
     public Transform[] m_rotationPoints = new Transform[12];
     public Transform[] m_orientationPoints = new Transform[4];
@@ -16,21 +35,77 @@ public class Dice : MonoBehaviour
     public BoxCollider m_backCollider;
     public GameObject m_box;
     public bool m_diceInteractable = true;
-    public bool m_isClimbable = false;
+
+    // Should be false by default
+    public bool m_isClimbable = true;
     public bool m_rotating = false;
+
+    private Transform[] m_faces = new Transform[6];
+
+    void Awake()
+    {
+        uint i = 0;
+        foreach (Transform face in transform.Find("Faces"))
+        {
+            m_faces[i] = face;
+            ++i;
+        }
+    }
 
     void Start()
     {
     }
 
-    public int getClosestFace(Vector3 referencePosition)
+    public FacePosition getClosestFace(Vector3 referencePosition)
     {
         float distBack = (referencePosition - m_orientationPoints[0].position).sqrMagnitude;
         float distLeft = (referencePosition - m_orientationPoints[1].position).sqrMagnitude;
         float distRight = (referencePosition - m_orientationPoints[2].position).sqrMagnitude;
         float distFront = (referencePosition - m_orientationPoints[3].position).sqrMagnitude;
         float[] allDists = { distBack, distLeft, distRight, distFront };
-        return Array.IndexOf(allDists, allDists.Min());
+        switch (Array.IndexOf(allDists, allDists.Min())) {
+            case 0:
+                return FacePosition.BACK;
+            case 1:
+                return FacePosition.LEFT;
+            case 2:
+                return FacePosition.RIGHT;
+            case 3:
+                return FacePosition.FRONT;
+            default:
+                Debug.Log("Index of closest face not known");
+                return FacePosition.UNKNOWN;
+        }
+    }
+
+    public Face getFaceUp()
+    {
+        float maxY = m_faces[0].position.y;
+        uint indexMaxY = 0;
+        for (uint i = 0; i < 6; ++i)
+        {
+            if (m_faces[i].position.y > maxY) {
+                maxY = m_faces[i].position.y;
+                indexMaxY = i;
+            }
+        }
+        switch (indexMaxY) {
+            case 0:
+                return Face.ONE;
+            case 1:
+                return Face.TWO;
+            case 2:
+                return Face.THREE;
+            case 3:
+                return Face.FOUR;
+            case 4:
+                return Face.FIVE;
+            case 5:
+                return Face.SIX;
+            default:
+                Debug.Log("Unknown index value for faces");
+                return Face.UNKNOWN;
+        }
     }
 
     public void setPrisonBoxCollidersState(bool enabled)
@@ -57,7 +132,6 @@ public class Dice : MonoBehaviour
             for (int rotateLoopIndex = 0; rotateLoopIndex < 90; ++rotateLoopIndex) {
                 m_box.transform.Rotate(0, 0, -1);
                 m_orientationPointsParent.transform.Rotate(0, 0, -1);
-                
                 transform.RotateAround(rotationPoint.Value, Vector3.forward, 1);
                 yield return new WaitForSeconds(0.005f);
             }
@@ -203,6 +277,10 @@ public class Dice : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.P))
+        {
+            Debug.Log(getFaceUp());
+        }
         // For testing
         if (Input.GetKey(KeyCode.Space))
         {
@@ -213,7 +291,7 @@ public class Dice : MonoBehaviour
         {
             setPrisonBoxCollidersState(false);
             m_diceInteractable = false;
-            m_isClimbable = true;
+            m_isClimbable = true;                    
         }
     }
 

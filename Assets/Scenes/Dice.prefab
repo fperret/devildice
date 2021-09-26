@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 133779277}
   - component: {fileID: 133779276}
   m_Layer: 0
-  m_Name: Quad (2)
+  m_Name: Face_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 163231092}
   - component: {fileID: 163231091}
   m_Layer: 0
-  m_Name: Quad (4)
+  m_Name: Face_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -236,7 +236,7 @@ BoxCollider:
   m_GameObject: {fileID: 299259196}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.1, y: 2, z: 0.9}
   m_Center: {x: -0.5, y: 1.2, z: 0}
@@ -438,7 +438,7 @@ BoxCollider:
   m_GameObject: {fileID: 977097797}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.9, y: 2, z: 0.1}
   m_Center: {x: 0, y: 1.2, z: 0.5}
@@ -455,7 +455,7 @@ GameObject:
   - component: {fileID: 1125528591}
   - component: {fileID: 1125528590}
   m_Layer: 0
-  m_Name: Quad (5)
+  m_Name: Face_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -579,7 +579,7 @@ BoxCollider:
   m_GameObject: {fileID: 1176895299}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.1, y: 2, z: 0.9}
   m_Center: {x: 0.5, y: 1.2, z: 0}
@@ -623,7 +623,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1329073866}
   m_Layer: 0
-  m_Name: Sides
+  m_Name: Faces
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -692,7 +692,7 @@ GameObject:
   - component: {fileID: 1391810158}
   - component: {fileID: 1391810157}
   m_Layer: 0
-  m_Name: Quad (1)
+  m_Name: Face_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5686,7 +5686,7 @@ BoxCollider:
   m_GameObject: {fileID: 1704866857}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.9, y: 2, z: 0.1}
   m_Center: {x: 0, y: 1.2, z: -0.5}
@@ -5703,7 +5703,7 @@ GameObject:
   - component: {fileID: 1739901482}
   - component: {fileID: 1739901481}
   m_Layer: 0
-  m_Name: Quad
+  m_Name: Face_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5830,7 +5830,7 @@ GameObject:
   - component: {fileID: 2108574379}
   - component: {fileID: 2108574378}
   m_Layer: 0
-  m_Name: Quad (3)
+  m_Name: Face_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
