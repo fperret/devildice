@@ -121,12 +121,26 @@ public class Dice : MonoBehaviour
         return ((a >= (b - 0.01f)) && (a <= b + 0.01f));
     }
 
+    private bool isRotationPossible(Vector3 rotationPoint, Vector3 direction)
+    {
+        // Check all collider in the direction we try to rotate the cube
+        // If any of the colliders hit is a dice, we cannot rotate
+        // We start the raycast slightly inside our dice because if we start on the edge and the dices are very close, the raycast will ignore the other dice
+        RaycastHit[] hits = Physics.RaycastAll(rotationPoint - (direction * 0.3f) + new Vector3(0, 0.5f, 0), direction + new Vector3(0, 0.5f, 0), 1);
+        for (int i = 0; i < hits.Length; i++) {
+            if (hits[i].collider.CompareTag("Dice"))
+                return false;
+        }
+        return true;
+    }
+
     IEnumerator rotateLeft()
     {
         float lowest_x = findGroundLowestX();
         Vector3? rotationPoint = findGroundPointWithXCoord(lowest_x);
-        if (rotationPoint.HasValue)
-        {
+        if (rotationPoint.HasValue) {
+            if (!isRotationPossible(rotationPoint.Value, Vector3.left))
+                yield break;
             m_rotating = true;
 
             for (int rotateLoopIndex = 0; rotateLoopIndex < 90; ++rotateLoopIndex) {
@@ -149,6 +163,8 @@ public class Dice : MonoBehaviour
         Vector3? rotationPoint = findGroundPointWithXCoord(highest_x);
         if (rotationPoint.HasValue)
         {
+            if (!isRotationPossible(rotationPoint.Value, Vector3.right))
+                yield break;
             m_rotating = true;
 
             for (int rotateLoopIndex = 0; rotateLoopIndex < 90; ++rotateLoopIndex) {
@@ -170,6 +186,8 @@ public class Dice : MonoBehaviour
         Vector3? rotationPoint = findGroundPointWithZCoord(highest_z);
         if (rotationPoint.HasValue)
         {
+            if (!isRotationPossible(rotationPoint.Value, Vector3.forward))
+                yield break;
             m_rotating = true;
 
             for (int rotateLoopIndex = 0; rotateLoopIndex < 90; ++rotateLoopIndex) {
@@ -191,6 +209,8 @@ public class Dice : MonoBehaviour
         Vector3? rotationPoint = findGroundPointWithZCoord(lowest_z);
         if (rotationPoint.HasValue)
         {
+            if (!isRotationPossible(rotationPoint.Value, Vector3.back))
+                yield break;
             m_rotating = true;
 
             for (int rotateLoopIndex = 0; rotateLoopIndex < 90; ++rotateLoopIndex) {
@@ -266,8 +286,9 @@ public class Dice : MonoBehaviour
         {
             if (approximateCheck(pointTransform.position.y, 0))
             {
-                if (approximateCheck(pointTransform.position.z, z))
+                if (approximateCheck(pointTransform.position.z, z)) {
                     return pointTransform.position;
+                }
             }
         }
         Debug.LogError("NOT NORMAL Rotation point not found for z : " + z);
@@ -284,7 +305,7 @@ public class Dice : MonoBehaviour
         // For testing
         if (Input.GetKey(KeyCode.Space))
         {
-            transform.Translate(Vector3.down * Time.deltaTime * 0.3f);
+            transform.Translate(Vector3.down * Time.deltaTime * 0.3f, Space.World);
         }
 
         if (transform.position.y < 0.25f)

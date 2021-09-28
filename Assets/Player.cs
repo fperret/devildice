@@ -171,6 +171,7 @@ public class Player : MonoBehaviour
         }
 
         Vector3 nextPosition = transform.position + m_movement * Time.deltaTime;
+        
         if (attachedDice != null) {
             ExitDirection exitDirection = getExitDirection(m_movement, nextPosition);
 

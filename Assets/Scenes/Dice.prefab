@@ -92,7 +92,7 @@ MeshCollider:
   m_GameObject: {fileID: 133779274}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -189,7 +189,7 @@ MeshCollider:
   m_GameObject: {fileID: 163231089}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -354,50 +354,6 @@ Transform:
   m_Father: {fileID: 1495850047}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &897309038
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 897309039}
-  - component: {fileID: 897309040}
-  m_Layer: 0
-  m_Name: DiceTrigger
-  m_TagString: Dice
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &897309039
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897309038}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 9056575191724604437}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &897309040
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 897309038}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2.9885912, z: 1}
-  m_Center: {x: 0, y: 0.9942956, z: 0}
 --- !u!1 &977097797
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,7 +490,7 @@ MeshCollider:
   m_GameObject: {fileID: 1125528588}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -647,7 +603,7 @@ Transform:
   - {fileID: 163231090}
   - {fileID: 1125528589}
   m_Father: {fileID: 9056575191724604437}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1375823944
 GameObject:
@@ -771,7 +727,7 @@ MeshCollider:
   m_GameObject: {fileID: 1391810155}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -5614,7 +5570,7 @@ Transform:
   - {fileID: 1375823945}
   - {fileID: 1900677887}
   m_Father: {fileID: 9056575191724604437}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1583783569
 GameObject:
@@ -5782,7 +5738,7 @@ MeshCollider:
   m_GameObject: {fileID: 1739901479}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -5909,7 +5865,7 @@ MeshCollider:
   m_GameObject: {fileID: 2108574376}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -5949,7 +5905,6 @@ Transform:
   - {fileID: 1487007151}
   - {fileID: 346133968}
   - {fileID: 1323173658}
-  - {fileID: 897309039}
   - {fileID: 1495850047}
   - {fileID: 1329073866}
   m_Father: {fileID: 0}
@@ -6029,7 +5984,7 @@ MonoBehaviour:
   m_backCollider: {fileID: 1704866859}
   m_box: {fileID: 346133967}
   m_diceInteractable: 1
-  m_isClimbable: 0
+  m_isClimbable: 1
   m_rotating: 0
 --- !u!1 &1098279911963376856
 GameObject:
