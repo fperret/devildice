@@ -598,34 +598,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 133779276, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 163231091, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1125528590, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1391810157, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1451778015, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
-      propertyPath: m_isClimbable
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1739901481, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2108574378, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1018343453066012882, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
       propertyPath: m_Name
       value: Dice

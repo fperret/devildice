@@ -40,6 +40,11 @@ public class Dice : MonoBehaviour
     public bool m_isClimbable = true;
     public bool m_rotating = false;
 
+    public bool m_isOtherDiceLeft = false;
+    public bool m_isOtherDiceRight = false;
+    public bool m_isOtherDiceFront = false;
+    public bool m_isOtherDiceBack = false;
+
     private Transform[] m_faces = new Transform[6];
 
     void Awake()
@@ -54,6 +59,7 @@ public class Dice : MonoBehaviour
 
     void Start()
     {
+        updateCheckNeighbors();
     }
 
     public FacePosition getClosestFace(Vector3 referencePosition)
@@ -121,17 +127,38 @@ public class Dice : MonoBehaviour
         return ((a >= (b - 0.01f)) && (a <= b + 0.01f));
     }
 
-    private bool isRotationPossible(Vector3 rotationPoint, Vector3 direction)
+    private bool isAnotherDiceInDirection(Vector3 direction)
     {
-        // Check all collider in the direction we try to rotate the cube
-        // If any of the colliders hit is a dice, we cannot rotate
-        // We start the raycast slightly inside our dice because if we start on the edge and the dices are very close, the raycast will ignore the other dice
-        RaycastHit[] hits = Physics.RaycastAll(rotationPoint - (direction * 0.3f) + new Vector3(0, 0.5f, 0), direction + new Vector3(0, 0.5f, 0), 1);
+        Debug.DrawLine(transform.position, transform.position + direction, Color.red, 1);
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, 1);
         for (int i = 0; i < hits.Length; i++) {
             if (hits[i].collider.CompareTag("Dice"))
-                return false;
+                return true;
         }
-        return true;
+        return false;
+    }
+
+    private void updateCheckNeighbors()
+    {
+        m_isOtherDiceLeft = isAnotherDiceInDirection(Vector3.left);
+        m_isOtherDiceRight = isAnotherDiceInDirection(Vector3.right);
+        m_isOtherDiceFront = isAnotherDiceInDirection(Vector3.forward);
+        m_isOtherDiceBack = isAnotherDiceInDirection(Vector3.back);
+    }
+
+    private bool isRotationPossible(Vector3 direction)
+    {
+        // Ajouter check bordure de map
+        if (direction == Vector3.left) {
+            return !m_isOtherDiceLeft;
+        } else if (direction == Vector3.right) {
+            return !m_isOtherDiceRight;
+        } else if (direction == Vector3.forward) {
+            return !m_isOtherDiceFront;
+        } else if (direction == Vector3.back) {
+            return !m_isOtherDiceBack;
+        }
+        return false;
     }
 
     IEnumerator rotateLeft()
@@ -139,7 +166,7 @@ public class Dice : MonoBehaviour
         float lowest_x = findGroundLowestX();
         Vector3? rotationPoint = findGroundPointWithXCoord(lowest_x);
         if (rotationPoint.HasValue) {
-            if (!isRotationPossible(rotationPoint.Value, Vector3.left))
+            if (!isRotationPossible(Vector3.left))
                 yield break;
             m_rotating = true;
 
@@ -151,6 +178,7 @@ public class Dice : MonoBehaviour
             }
 
             yield return new WaitForSeconds(0.1f);
+            updateCheckNeighbors();
             m_rotating = false;
             
         }
@@ -163,7 +191,7 @@ public class Dice : MonoBehaviour
         Vector3? rotationPoint = findGroundPointWithXCoord(highest_x);
         if (rotationPoint.HasValue)
         {
-            if (!isRotationPossible(rotationPoint.Value, Vector3.right))
+            if (!isRotationPossible(Vector3.right))
                 yield break;
             m_rotating = true;
 
@@ -175,6 +203,7 @@ public class Dice : MonoBehaviour
             }
             
             yield return new WaitForSeconds(0.1f);
+            updateCheckNeighbors();
             m_rotating = false;
         }
         yield break;
@@ -186,7 +215,7 @@ public class Dice : MonoBehaviour
         Vector3? rotationPoint = findGroundPointWithZCoord(highest_z);
         if (rotationPoint.HasValue)
         {
-            if (!isRotationPossible(rotationPoint.Value, Vector3.forward))
+            if (!isRotationPossible(Vector3.forward))
                 yield break;
             m_rotating = true;
 
@@ -198,6 +227,7 @@ public class Dice : MonoBehaviour
             }
         
             yield return new WaitForSeconds(0.1f);
+            updateCheckNeighbors();
             m_rotating = false;
         }
         yield break;
@@ -209,7 +239,7 @@ public class Dice : MonoBehaviour
         Vector3? rotationPoint = findGroundPointWithZCoord(lowest_z);
         if (rotationPoint.HasValue)
         {
-            if (!isRotationPossible(rotationPoint.Value, Vector3.back))
+            if (!isRotationPossible(Vector3.back))
                 yield break;
             m_rotating = true;
 
@@ -221,6 +251,7 @@ public class Dice : MonoBehaviour
             }
             
             yield return new WaitForSeconds(0.1f);
+            updateCheckNeighbors();
             m_rotating = false;
         }
         yield break;
@@ -300,6 +331,10 @@ public class Dice : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.P))
         {
+            isAnotherDiceInDirection(Vector3.left);
+            isAnotherDiceInDirection(Vector3.right);
+            isAnotherDiceInDirection(Vector3.forward);
+            isAnotherDiceInDirection(Vector3.back);
             Debug.Log(getFaceUp());
         }
         // For testing
