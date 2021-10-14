@@ -138,11 +138,27 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 299259198, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 977097799, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1125528590, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1176895301, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1391810157, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1704866859, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
@@ -204,6 +220,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+--- !u!65 &318176720 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 977097799, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+  m_PrefabInstance: {fileID: 8109100099016202416}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -312,7 +333,7 @@ GameObject:
   - component: {fileID: 847568539}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -494,6 +515,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1565477918 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 1176895301, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+  m_PrefabInstance: {fileID: 8109100099016202416}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1662031129
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,15 +571,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8654250720420943610, guid: 34115fd4eff069845a47d22ce756724e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.534
+      value: 1.425
       objectReference: {fileID: 0}
     - target: {fileID: 8654250720420943610, guid: 34115fd4eff069845a47d22ce756724e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.082
+      value: 1.246
       objectReference: {fileID: 0}
     - target: {fileID: 8654250720420943610, guid: 34115fd4eff069845a47d22ce756724e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.521
+      value: 0.453
       objectReference: {fileID: 0}
     - target: {fileID: 8654250720420943610, guid: 34115fd4eff069845a47d22ce756724e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -598,6 +624,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 299259198, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 977097799, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176895301, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1451778015, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+      propertyPath: m_isClimbable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1451778015, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+      propertyPath: m_frontCollider
+      value: 
+      objectReference: {fileID: 318176720}
+    - target: {fileID: 1451778015, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+      propertyPath: m_rightCollider
+      value: 
+      objectReference: {fileID: 1565477918}
+    - target: {fileID: 1451778015, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+      propertyPath: m_diceInteractable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1704866859, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1018343453066012882, guid: 51ef4fcf9ed8873449e171abe4c1fd7b, type: 3}
       propertyPath: m_Name
       value: Dice

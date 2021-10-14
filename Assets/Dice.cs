@@ -37,14 +37,14 @@ public class Dice : MonoBehaviour
     public bool m_diceInteractable = true;
 
     // Should be false by default
-    public bool m_isClimbable = true;
+    public bool m_isClimbable = false;
     public bool m_rotating = false;
 
     public bool m_isOtherDiceLeft = false;
     public bool m_isOtherDiceRight = false;
     public bool m_isOtherDiceFront = false;
     public bool m_isOtherDiceBack = false;
-
+    public bool m_isPlayerOnDice = false;
     private Transform[] m_faces = new Transform[6];
 
     void Awake()
@@ -59,7 +59,21 @@ public class Dice : MonoBehaviour
 
     void Start()
     {
-        updateCheckNeighbors();
+        //updateCheckNeighbors();
+    }
+
+    public void onPlayerGetOnDice()
+    {
+        m_isPlayerOnDice = true;
+        if (m_diceInteractable) {
+            updateCheckNeighbors();
+        }
+    }
+
+    public void onPlayerGetOffDice()
+    {
+        m_isPlayerOnDice = false;
+        setPrisonBoxCollidersState(false);
     }
 
     public FacePosition getClosestFace(Vector3 referencePosition)
@@ -144,6 +158,13 @@ public class Dice : MonoBehaviour
         m_isOtherDiceRight = isAnotherDiceInDirection(Vector3.right);
         m_isOtherDiceFront = isAnotherDiceInDirection(Vector3.forward);
         m_isOtherDiceBack = isAnotherDiceInDirection(Vector3.back);
+        
+        Debug.Log("Left ? " + m_isOtherDiceLeft + " Right ? " + m_isOtherDiceRight + " Front ? " + m_isOtherDiceFront + " Back ? " + m_isOtherDiceBack);
+
+        m_leftCollider.enabled = !m_isOtherDiceLeft;
+        m_rightCollider.enabled = !m_isOtherDiceRight;
+        m_frontCollider.enabled = !m_isOtherDiceFront;
+        m_backCollider.enabled = !m_isOtherDiceBack;
     }
 
     private bool isRotationPossible(Vector3 direction)
@@ -163,6 +184,7 @@ public class Dice : MonoBehaviour
 
     IEnumerator rotateLeft()
     {
+        Debug.Log("Rotate left");
         float lowest_x = findGroundLowestX();
         Vector3? rotationPoint = findGroundPointWithXCoord(lowest_x);
         if (rotationPoint.HasValue) {
@@ -187,6 +209,7 @@ public class Dice : MonoBehaviour
 
     IEnumerator rotateRight()
     {
+        Debug.Log("Rotate right");
         float highest_x = findGroundHighestX();
         Vector3? rotationPoint = findGroundPointWithXCoord(highest_x);
         if (rotationPoint.HasValue)
@@ -211,6 +234,7 @@ public class Dice : MonoBehaviour
 
     IEnumerator rotateForward()
     {
+        Debug.Log("Rotate forward");
         float highest_z = findGroundHighestZ();
         Vector3? rotationPoint = findGroundPointWithZCoord(highest_z);
         if (rotationPoint.HasValue)
@@ -235,6 +259,7 @@ public class Dice : MonoBehaviour
 
     IEnumerator rotateBackward()
     {
+        Debug.Log("Rotate backward");
         float lowest_z = findGroundLowestZ();
         Vector3? rotationPoint = findGroundPointWithZCoord(lowest_z);
         if (rotationPoint.HasValue)
@@ -338,16 +363,21 @@ public class Dice : MonoBehaviour
             Debug.Log(getFaceUp());
         }
         // For testing
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && name == "Dice")
         {
             transform.Translate(Vector3.down * Time.deltaTime * 0.3f, Space.World);
         }
+        if (Input.GetKey(KeyCode.U))
+        {
+            transform.Translate(Vector3.up * Time.deltaTime * 0.3f, Space.World);
+        }
 
+        // Dice is interactable only when it is at its max height
+        m_diceInteractable = approximateCheck(transform.position.y, 0.5f);
         if (transform.position.y < 0.25f)
         {
             setPrisonBoxCollidersState(false);
-            m_diceInteractable = false;
-            m_isClimbable = true;                    
+            //m_isClimbable = true;                    
         }
     }
 
