@@ -1972,8 +1972,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37bcc4066a598e14699497ae88968424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attachedDice: {fileID: 0}
   m_needToClimb: 0
+  m_isPushing: 0
+  m_onFloor: 0
+  m_collidingDice: 0
+  m_movement: {x: 0, y: 0, z: 0}
 --- !u!1 &8654250720420973342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1984,8 +1987,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8654250720420943614}
   - component: {fileID: 8654250720407373730}
-  - component: {fileID: 1362821090}
-  - component: {fileID: 1362821091}
   - component: {fileID: 1362821092}
   m_Layer: 0
   m_Name: MaleDummy_Mesh
@@ -2113,34 +2114,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0016462803, y: 0.00000020861626, z: 0.03639815}
     m_Extent: {x: 0.9924226, y: 0.9069464, z: 0.24306375}
   m_DirtyAABB: 0
---- !u!64 &1362821090
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8654250720420973342}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 317a56890b5c8e74ab1d492a2c7fb608, type: 3}
---- !u!136 &1362821091
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8654250720420973342}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  m_Radius: 0.26721522
-  m_Height: 2.0784633
-  m_Direction: 2
-  m_Center: {x: 0, y: 0.07, z: -0.95}
 --- !u!65 &1362821092
 BoxCollider:
   m_ObjectHideFlags: 0
