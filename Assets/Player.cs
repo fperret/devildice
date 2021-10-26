@@ -19,10 +19,12 @@ public class Player : MonoBehaviour
     private Rigidbody m_rigidBody;
     private CharacterController m_controller;
 
+    [SerializeField]
     private GameObject m_attachedDice = null;
-    private GameObject m_diceToPush = null;     public bool m_needToClimb = false;
+    private GameObject m_diceToPush = null;
     public bool m_isPushing = false;
     public bool m_onFloor = false;
+    public bool m_collidingDice = false;
     // Start is called before the first frame update
     public Vector3 m_movement;
 
@@ -136,7 +138,6 @@ public class Player : MonoBehaviour
 
     IEnumerator pushDice(Vector3 movement)
     {
-        m_isPushing = true;
         Dice.FacePosition pushingFace = m_diceToPush.GetComponent<Dice>().getClosestFace(transform.position);
         Vector3 direction = Vector3.zero;
         switch (pushingFace)
@@ -163,15 +164,18 @@ public class Player : MonoBehaviour
         if (Vector3.Dot(movement, direction) != 1) {
             yield break;
         }
-
+        // We do not want player to input movement during the animation so we overload the movement of the character
+        m_isPushing = true;
+        GetComponent<testcharactercontroller>().m_moveOverload = direction;
         for (uint i = 0; i < 100; ++i)
         {
             // parfois c'est null
             m_diceToPush.transform.Translate(direction * Time.deltaTime);
-            transform.Translate(direction * Time.deltaTime);
             yield return new WaitForSeconds(0.01f);
         }
+        GetComponent<testcharactercontroller>().m_moveOverload = Vector3.zero;
         m_isPushing = false;
+        m_diceToPush = null;
         yield break;
     }
 
@@ -190,16 +194,6 @@ public class Player : MonoBehaviour
             return ;
         }
 
-        // Voir comment les deplacements se passent quand on veut passer d'un cube en train d'apparaitre / disparaitre a un qui est full
-        // 
-        if (m_diceToPush != null && !m_isPushing) {
-            m_pressPushTime += Time.deltaTime;
-            if (m_pressPushTime > CEILING_PRESS_PUSH) {
-                StartCoroutine("pushDice", m_movement);
-                m_pressPushTime = 0;
-            }
-        }
-
         Vector3 nextPosition = transform.position + m_movement * Time.deltaTime;
         
         if (m_attachedDice != null) {
@@ -215,20 +209,10 @@ public class Player : MonoBehaviour
             } else {
                 // Get off the dice
                 if (exitDirection != ExitDirection.NONE) {
+                    m_attachedDice.GetComponent<Dice>().onPlayerGetOffDice();
                     m_attachedDice = null;
                 }
             }
-        }
-
-        if (m_needToClimb && m_attachedDice != null) {
-            m_needToClimb = false;
-            // Move to the top of the dice
-            // /!\ If the Y offset we had here is too big we will trigger OnCollisionExit and think we need to climb again
-            //nextPosition += new Vector3(0, m_attachedDice.transform.Find("Top").position.y, 0);
-            nextPosition += new Vector3(0, m_attachedDice.transform.Find("Top").position.y - transform.position.y, 0);
-            // Move slightly more towards the center of the dice to not fall
-            nextPosition += (m_attachedDice.transform.position - transform.position) / 10;
-            m_attachedDice.GetComponent<Dice>().onPlayerGetOnDice();
         }
 
         if (m_attachedDice == null) {
@@ -241,8 +225,6 @@ public class Player : MonoBehaviour
         }
 
         // Ajouter mecanismes liés a l'apparition de dés
-
-        transform.position = nextPosition;
     }
 
 
@@ -263,22 +245,43 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) {
         Debug.Log("Collision enter");
-        if (other.gameObject.CompareTag("Dice") && (m_attachedDice != other.gameObject)) {
+    }
 
-            Dice diceCollided = other.gameObject.GetComponent<Dice>();
-            if (isDiceClimbable(diceCollided)) {
-                Debug.Log("Dice climbable");
-                if (!isDiceWalkable(diceCollided)) {
-                    m_needToClimb = true;
-                } else {
+    private void OnCollisionStay(Collision other) {
+        if (m_isPushing) {
+            return ;
+        }
+        if (other.gameObject.CompareTag("Dice")) {
+            m_collidingDice = true;
+            if (m_attachedDice != other.gameObject) {
+
+                Dice diceCollided = other.gameObject.GetComponent<Dice>();
+                float diff_y = other.transform.position.y - transform.position.y;
+                if (diff_y < 0) {// Dice is below the player
+                    m_attachedDice = other.gameObject;
+                    // Les colliders au bord du dice s'activent avant que le joueur soit vraiment dessus donc on tombe
                     diceCollided.onPlayerGetOnDice();
+                } else { // Need to push the dice
+
+                    if (m_onFloor && diceCollided.m_diceInteractable) {
+
+                        // We will start the coroutine even if we are not moving in the direction of the dice
+                        // It is not a big deal because the coroutine will do the check
+                        // Still kind of a problem because we can move while moving along a dice (not pushing)
+                        // and instantly push it because the timer is increased even if not moving against the dice
+                        float horizontalMove = Input.GetAxis("Horizontal");
+                        float verticalMove = Input.GetAxis("Vertical");
+                        if (!(horizontalMove == 0 && verticalMove == 0)) {
+                            m_pressPushTime += Time.deltaTime;
+                            if (m_pressPushTime > CEILING_PRESS_PUSH) {
+                                m_diceToPush = other.gameObject;
+                                StartCoroutine("pushDice", m_movement);
+                                m_pressPushTime = 0;
+                            }
+                        }
+                        
+                    }
                 }
-                // Attach dice after we are on it
-                m_attachedDice = other.gameObject;
-            } else if (m_onFloor && diceCollided.m_diceInteractable) { // Pushing a dice from the floor
-            // /!\ What happens if we try to push a dice while being on a dice that is disappearing  ?
-                // Push dice
-                m_diceToPush = other.gameObject;
             }
         } else if (other.gameObject.CompareTag("Floor")) {
             m_onFloor = true;
@@ -288,12 +291,10 @@ public class Player : MonoBehaviour
     private void OnCollisionExit(Collision other) {
         Debug.Log("Collision exit");
         if (other.gameObject.CompareTag("Dice")) {
-            if (other.gameObject.GetComponent<Dice>().m_isClimbable) {
-                m_needToClimb = false;
-            } else {
-                if (m_isPushing == false) {
-                    m_diceToPush = null;
-                }
+            m_collidingDice = false;
+            // Maybe not necessary anymore
+            if (m_isPushing == false) {
+                m_diceToPush = null;
             }
         } else if (other.gameObject.CompareTag("Floor")) {
             m_onFloor = false;
