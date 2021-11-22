@@ -38,6 +38,7 @@
   <ItemGroup>
      <Compile Include="Assets\Player.cs" />
      <Compile Include="Assets\Dice.cs" />
+     <Compile Include="Assets\testcharactercontroller.cs" />
      <None Include="Assets\Kevin Iglesias\3DCharacterDummy\Readme.txt" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Editor/2021.1.17f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

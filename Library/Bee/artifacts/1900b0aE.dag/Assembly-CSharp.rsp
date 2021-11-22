@@ -321,6 +321,7 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/VSSettingsProvider.ref.dll"
 "Assets/Dice.cs"
 "Assets/Player.cs"
+"Assets/testcharactercontroller.cs"
 -langversion:8.0
 
 /deterministic
