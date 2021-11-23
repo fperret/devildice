@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Player needs a  kinematic rigidbody with gravity and all freeze position + freeze rotation
+
 public class Player : MonoBehaviour
 {
     private enum ExitDirection
@@ -166,14 +168,15 @@ public class Player : MonoBehaviour
         }
         // We do not want player to input movement during the animation so we overload the movement of the character
         m_isPushing = true;
-        GetComponent<testcharactercontroller>().m_moveOverload = direction;
+        GetComponent<CharacterController>().enabled = false;
         for (uint i = 0; i < 100; ++i)
         {
             // parfois c'est null
+            transform.Translate(direction * Time.deltaTime);
             m_diceToPush.transform.Translate(direction * Time.deltaTime);
             yield return new WaitForSeconds(0.01f);
         }
-        GetComponent<testcharactercontroller>().m_moveOverload = Vector3.zero;
+        GetComponent<CharacterController>().enabled = true;
         m_isPushing = false;
         m_diceToPush = null;
         yield break;
@@ -256,8 +259,8 @@ public class Player : MonoBehaviour
             if (m_attachedDice != other.gameObject) {
 
                 Dice diceCollided = other.gameObject.GetComponent<Dice>();
-                float diff_y = other.transform.position.y - transform.position.y;
-                if (diff_y < 0) {// Dice is below the player
+                float diff_y = other.transform.position.y - transform.position.y; 
+                if (diff_y < 0  && !m_onFloor) {// Dice is below the player
                     m_attachedDice = other.gameObject;
                     // Les colliders au bord du dice s'activent avant que le joueur soit vraiment dessus donc on tombe
                     diceCollided.onPlayerGetOnDice();

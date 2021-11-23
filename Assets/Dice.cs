@@ -4,6 +4,8 @@ using UnityEngine;
 using System.Linq;
 using System;
 
+// Dice must have a kinematic rigidbody with gravity enabled and freeze position on Y
+
 public class Dice : MonoBehaviour
 {
     public enum Face {
@@ -370,8 +372,7 @@ public class Dice : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.P))
-        {
+        if (Input.GetKey(KeyCode.P)) {
             isAnotherDiceInDirection(Vector3.left);
             isAnotherDiceInDirection(Vector3.right);
             isAnotherDiceInDirection(Vector3.forward);
@@ -379,22 +380,22 @@ public class Dice : MonoBehaviour
             Debug.Log(getFaceUp());
         }
         // For testing
-        if (Input.GetKey(KeyCode.Space) && name == "Dice")
-        {
+        if (Input.GetKey(KeyCode.Space) && name == "Dice") {
             transform.Translate(Vector3.down * Time.deltaTime * 0.3f, Space.World);
         }
-        if (Input.GetKey(KeyCode.U) && transform.position.y < 0.5f)
-        {
+        if (Input.GetKey(KeyCode.U) && transform.position.y < 0.5f) {
             StartCoroutine("spawn");
             //transform.Translate(Vector3.up * Time.deltaTime * 0.3f, Space.World);
         }
 
         // Dice is interactable only when it is at its max height
         m_diceInteractable = approximateCheck(transform.position.y, 0.5f);
-        if (transform.position.y < 0.25f)
-        {
+        if (transform.position.y < 0.25f) {
             setPrisonBoxCollidersState(false);
             //m_isClimbable = true;                    
+        }
+        if (!m_isPlayerOnDice) {
+            setPrisonBoxCollidersState(false);
         }
     }
 
